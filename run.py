@@ -2,8 +2,10 @@ from shell import lexer
 from shell import parser
 from shell import data_type
 import random
+import pygame
 import datetime
-
+from game import game
+from click import click
 
 print('''fslang 0.0.1 (tags/v0.0.1de54cf5) [MSC v.1938 64 bit (AMD64)] on win32
 type "tutorial" or access https://github.com/dinhsonhai132?tab=repositories for more information...''')
@@ -28,9 +30,17 @@ type "tutorial" or access https://github.com/dinhsonhai132?tab=repositories for 
         for i in range(100):
             print("\n")
     
+    elif player == "game > jumping_simulator":
+        game()
+        exit()
+        
+    elif player == "game > click_simulator":
+        click()
+        exit()
+
     else:
         lexers = lexer(player)
         toks = lexers.tok()
         parsers = parser(toks)
-        
+
         print(parsers.caculator())
