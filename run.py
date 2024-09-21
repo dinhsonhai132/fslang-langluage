@@ -32,10 +32,10 @@ type "tutorial" or access https://github.com/dinhsonhai132?tab=repositories for 
     
     elif player == "game > jumping_simulator":
         game()
-
+        exit()
     elif player == "game > click_simulator":
         click()
-
+        exit()
     else:
         lexers = lexer(player)
         toks = lexers.tok()
