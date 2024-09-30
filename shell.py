@@ -67,84 +67,23 @@ class parser:
     
 
     def caculator(self):
-        operators = []
-        numbers = []
-
-
+        
+        result = 0
+        numbers = 0
+        
         while self.tok_idx < len(self.toks):
             self.cur_tok = self.toks[self.tok_idx]
+            
             if self.cur_tok.type == INT:
-                numbers.append(int(self.cur_tok.value))
-
+                numbers = self.cur_tok.value
             elif self.cur_tok.type == PLUS:
-                operators.append(self.cur_tok.type)
-
+                result += numbers
+                numbers = 0
             elif self.cur_tok.type == MINUS:
-                operators.append(self.cur_tok.type)  
-
-            elif self.cur_tok.type == TIME:
-                operators.append(self.cur_tok.type)
-
-            elif self.cur_tok.type == DIV:
-                operators.append(self.cur_tok.type)
-
-            self.tok_idx += 1
-
-
-        idx = 0
-        new_operators = []
-        new_numbers = []
-        factor = 0
-
-
-        while idx < len(operators):
-            if operators[idx] == TIME:
-                factor = numbers[idx] * numbers[idx + 1]
-                new_numbers.append(factor)
-
-            elif operators[idx] == DIV:
-                factor = numbers[idx] / numbers[idx + 1]
-                new_numbers.append(factor)
-
-            elif operators[idx] == PLUS and operators[idx - 1] not in [DIV, TIME, None]:
-                new_operators.append(operators[idx])
-                new_numbers.append(numbers[idx])
-
-            elif operators[idx] == MINUS and operators[idx - 1] not in [DIV, TIME, None]:
-                new_operators.append(operators[idx])
-                new_numbers.append(numbers[idx])
-
-            elif operators[idx] == PLUS:
-                new_operators.append(operators[idx])
-
-            elif operators[idx] == MINUS:
-                new_operators.append(operators[idx])
-
-            else:
-                new_operators.append(operators[idx])
-
-            idx += 1
-
-
-        if operators[len(operators) - 1] in [PLUS, MINUS]:
-            new_numbers.append(numbers[len(numbers) - 1])
-
-
-        new_idx = 0
-        result = new_numbers[0]
-
-
-        while new_idx < len(new_operators):
-            if new_operators[new_idx] == PLUS:
-                result += new_numbers[new_idx + 1]
-
-            elif operators[new_idx] == MINUS:
-                result -= new_numbers[new_idx + 1]
-
-            new_idx += 1
-
-
-        print(result)
+                result -= numbers
+                numbers = 0
+            
+        return result
     
     def print(self):
         pass
