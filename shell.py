@@ -82,7 +82,7 @@ class parser:
             elif self.cur_tok.type == MINUS:
                 result -= numbers
                 numbers = 0
-            
+            self.tok_idx += 1
         return result
     
     def print(self):
