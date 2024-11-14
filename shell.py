@@ -63,27 +63,41 @@ class parser:
     def __init__(self, toks) -> None:
         self.toks = toks
         self.tok_idx = 0
-        self.cur_tok = self.toks[self.tok_idx]
+
     
 
-    def caculator(self):
-        
-        result = 0
-        numbers = 0
-        
-        while self.tok_idx < len(self.toks):
-            self.cur_tok = self.toks[self.tok_idx]
-            
-            if self.cur_tok.type == INT:
-                numbers = self.cur_tok.value
-            elif self.cur_tok.type == PLUS:
-                result += numbers
-                numbers = 0
-            elif self.cur_tok.type == MINUS:
-                result -= numbers
-                numbers = 0
+    def eval(self):
+        def get_next_tok():
+            return self.toks[self.tok_idx]
             self.tok_idx += 1
-        return result
-    
-    def print(self):
-        pass
+        
+        def factor():
+            if self.toks[self.tok_idx].type == INT:
+                return self.toks[self.tok_idx]
+        
+        def term():
+            result = factor()
+            while True:
+                if (self.toks[self.tok_idx].type == TIME):
+                    result *= factor()
+                elif (self.toks[self.tok_idx].type == DIV):
+                    result /= factor()
+                else:
+                    tok_idx -= 1
+                    break
+            return result
+
+        def expr():
+            result = term()
+            while True:
+                if (self.toks[self.tok_idx].type == PLUS):
+                    result *= term()
+                elif (self.toks[self.tok_idx].type == MINUS):
+                    result /= term()
+                else:
+                    tok_idx -= 1
+                    break
+            return result
+        
+        return expr()
+        
