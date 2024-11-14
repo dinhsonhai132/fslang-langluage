@@ -41,4 +41,4 @@ type "tutorial" or access https://github.com/dinhsonhai132?tab=repositories for 
         toks = lexers.tok()
         parsers = parser(toks)
 
-        print(parsers.caculator())
+        print(parsers.eval())
