@@ -68,34 +68,38 @@ class parser:
 
     def eval(self):
         def get_next_tok():
-            return self.toks[self.tok_idx]
+            tok = self.toks[self.tok_idx]
             self.tok_idx += 1
+            return tok
         
         def factor():
-            if get_next_tok() == INT:
-                return self.toks[self.tok_idx]
+            tok = get_next_tok()
+            if tok.type == INT:
+                return int(tok.value)
         
         def term():
             result = factor()
             while True:
-                if (self.toks[self.tok_idx].type == TIME):
+                tok = get_next_tok()
+                if (tok.type == TIME):
                     result *= factor()
-                elif (self.toks[self.tok_idx].type == DIV):
+                elif (tok.type == DIV):
                     result /= factor()
                 else:
-                    tok_idx -= 1
+                    self.tok_idx -= 1
                     break
             return result
 
         def expr():
             result = term()
             while True:
-                if (self.toks[self.tok_idx].type == PLUS):
-                    result *= term()
-                elif (self.toks[self.tok_idx].type == MINUS):
-                    result /= term()
+                tok = get_next_tok()
+                if (tok.type == PLUS):
+                    result += term()
+                elif (tok.type == MINUS):
+                    result -= term()
                 else:
-                    tok_idx -= 1
+                    self.tok_idx -= 1
                     break
             return result
         
