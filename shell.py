@@ -72,7 +72,7 @@ class parser:
             self.tok_idx += 1
         
         def factor():
-            if self.toks[self.tok_idx].type == INT:
+            if get_next_tok() == INT:
                 return self.toks[self.tok_idx]
         
         def term():
